@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+    webserver:
+        privileged: true
+        build:
+            context: ./webserver
+        container_name: webserver
+        restart: 'always'
+        links:
+            - database
+        ports:
+            - "80:80"
+        volumes:
+            - ./data/www:/var/www/html
+            - ./conf/php.ini:/usr/local/etc/php/php.ini
+
+    database:
+        build:
+            context: ./database
+        container_name: database
+        restart: 'always'
+        ports:
+            - "127.0.0.1:3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
