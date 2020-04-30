@@ -7,13 +7,12 @@ services:
             context: ./webserver
         container_name: webserver
         restart: 'always'
-        links:
-            - database
         ports:
             - "80:80"
         volumes:
             - ./data/www:/var/www/html
             - ./conf/php.ini:/usr/local/etc/php/php.ini
+            - ./conf/000-default.conf:/etc/apache2/sites-available/000-default.conf
 
     database:
         build:
